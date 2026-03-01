@@ -106,6 +106,8 @@ RUN echo ' \
     }' > /etc/nginx/sites-available/default
 
 # Configure PHP-FPM to listen on TCP port 9000 and increase workers
+# pm.max_children is set to 40 based on expected peak concurrency and container memory limits;
+# adjust this value if workload characteristics or memory constraints change.
 RUN sed -i 's/listen = .*/listen = 127.0.0.1:9000/' /etc/php/7.4/fpm/pool.d/www.conf && \
     sed -i 's/pm.max_children = .*/pm.max_children = 40/' /etc/php/7.4/fpm/pool.d/www.conf
     
