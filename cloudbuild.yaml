@@ -7,7 +7,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/jyotish-repo/jyotish-api']
 
-  # Deploy container image to Cloud Run
+ # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
@@ -15,14 +15,24 @@ steps:
       - 'deploy'
       - 'jyotish-api'
       - '--image'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/jyotish-repo/jyotish-api'
+      - 'europe-west10.pkg.dev/$PROJECT_ID/jyotish-repo/jyotish-api'
       - '--region'
-      - 'us-central1'
+      - 'europe-west10'
       - '--platform'
       - 'managed'
       - '--port'
       - '8080'
       - '--allow-unauthenticated'
+      - '--memory'
+      - '2Gi'
+      - '--cpu'
+      - '1'
+      - '--concurrency'
+      - '40'
+      - '--min-instances'
+      - '1'
+      - '--max-instances'
+      - '50'
 
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/jyotish-repo/jyotish-api'
